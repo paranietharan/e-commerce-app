@@ -50,4 +50,24 @@ public class CustomerService {
                 .map(mapper::toCustomerResponse)
                 .toList();
     }
+
+    public Boolean existsByIdById(String id) {
+        return repository.findById(id).isPresent();
+    }
+
+    public CustomerResponse findById(String customerId) {
+        var customer = repository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                        "Cannot find the customer :: No customer with the provided ID::" + customerId
+                ));
+        return mapper.toCustomerResponse(customer);
+    }
+
+    public void deleteCustomer(String customerId) {
+        var customer = repository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                        "Cannot delete the customer :: No customer with the provided ID::" + customerId
+                ));
+        repository.delete(customer);
+    }
 }
