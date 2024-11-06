@@ -51,15 +51,7 @@ public class ProductService {
             storedProduct.setAvilableQuantity(storedProduct.getAvilableQuantity() - productPurchaseRequest.quantity());
             productRepository.save(storedProduct);
 
-            purchasedProducts.add(
-                    new ProductPurchaseResponse(
-                            storedProduct.getId(),
-                            storedProduct.getName(),
-                            storedProduct.getDescription(),
-                            productPurchaseRequest.quantity(),
-                            storedProduct.getPrice()
-                    )
-            );
+            purchasedProducts.add(productMapper.toProductPurchaseResponse(storedProduct, productPurchaseRequest.quantity()));
         }
 
         return purchasedProducts;

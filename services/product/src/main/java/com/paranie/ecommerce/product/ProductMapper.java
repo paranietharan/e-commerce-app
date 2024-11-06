@@ -1,6 +1,7 @@
 package com.paranie.ecommerce.product;
 
 import com.paranie.ecommerce.category.Category;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,6 +32,16 @@ public class ProductMapper {
                 product.getCategory().getId(),
                 product.getCategory().getName(),
                 product.getCategory().getDescription()
+        );
+    }
+
+    public ProductPurchaseResponse toProductPurchaseResponse(Product storedProduct, double quantity) {
+        return new ProductPurchaseResponse(
+                storedProduct.getId(),
+                storedProduct.getName(),
+                storedProduct.getDescription(),
+                quantity,
+                storedProduct.getPrice()
         );
     }
 }
