@@ -1,7 +1,9 @@
 package com.paranie.ecommerce.product;
 
 import com.paranie.ecommerce.category.Category;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductMapper {
 
     public Product toProduct(ProductRequest productRequest) {

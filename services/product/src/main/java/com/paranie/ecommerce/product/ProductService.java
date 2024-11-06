@@ -2,10 +2,10 @@ package com.paranie.ecommerce.product;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +32,9 @@ public class ProductService {
     }
 
     public List<ProductResponse> findAll() {
-        return null;
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::toProductResponse)
+                .collect(Collectors.toList());
     }
 }
