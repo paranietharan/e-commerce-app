@@ -24,7 +24,7 @@ public class ProductController {
     @PostMapping("/purchase")
     public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(
             @RequestBody List<ProductPurchaseRequest> productPurchaseRequests
-    ){
+    ) throws ProductPurchaseException {
         return ResponseEntity.ok(productService.purchaseProducts(productPurchaseRequests));
     }
 
