@@ -2,6 +2,10 @@ package com.paranie.ecommerce.order;
 
 import com.paranie.ecommerce.customer.CustomerClient;
 import com.paranie.ecommerce.exception.BusinessException;
+import com.paranie.ecommerce.orderline.OrderLineRequest;
+import com.paranie.ecommerce.orderline.OrderLineService;
+import com.paranie.ecommerce.product.ProductClient;
+import com.paranie.ecommerce.product.PurchaseRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +15,9 @@ import org.springframework.stereotype.Service;
 public class OrderService {
     private final CustomerClient customerClient;
     private final ProductClient productClient;
+    private final OrderRepository repository;
+    private final OrderMapper mapper;
+    private final OrderLineService orderLineService;
 
     public Integer createOrder(@Valid OrderRequest request) {
         // Check the customer --> OpenFeign
@@ -21,14 +28,24 @@ public class OrderService {
                 );
 
         // Purchase the products --> product microservice (RestTemplate)
+        this.productClient.purchasePrdouct(request.products());
 
-        // Persist order
+        var order = this.repository.save(
+                mapper.toOrder(request)
+        );
 
-        // persist order lines
+        for(PurchaseRequest purchaseRequest: request.products()){
+            orderLineService.saveOrderLine(
+                    new OrderLineRequest(
+                            null,
+                            order.getId(),
+                            purchaseRequest.productId(),
+                            purchaseRequest.quantity()
+                    )
+            );
+        }
 
-        // start payment process
-
-        // send order confirmation  --> notification microservice(kafka)
-
+        // TODO: Start payment process
+        // Send the order confirmation --> notification-ms(Kafka)
     }
 }
