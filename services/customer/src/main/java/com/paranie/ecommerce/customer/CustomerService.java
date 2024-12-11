@@ -14,13 +14,13 @@ public class CustomerService {
 
     private  final CustomerRepository repository;
     private final CustomerMapper mapper;
-    public String createCustomer(@Valid CustomerRequest request) {
+    public Integer createCustomer(@Valid CustomerRequest request) {
         var customer = repository.save(mapper.toCustomer(request));
         return customer.getId();
     }
 
     public void updateCustomer(@Valid CustomerRequest request) {
-        var customer = repository.findById(request.id())
+        Customer customer = repository.findById(request.id())
                 .orElseThrow(() -> new CustomerNotFoundException(
                         "Cannot update the customer :: No customer with the provided ID::" + request.id()
                 ));
@@ -51,20 +51,20 @@ public class CustomerService {
                 .toList();
     }
 
-    public Boolean existsByIdById(String id) {
+    public Boolean existsByIdById(Integer id) {
         return repository.findById(id).isPresent();
     }
 
-    public CustomerResponse findById(String customerId) {
-        var customer = repository.findById(customerId)
+    public CustomerResponse findById(Integer customerId) {
+        Customer customer = repository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(
                         "Cannot find the customer :: No customer with the provided ID::" + customerId
                 ));
         return mapper.toCustomerResponse(customer);
     }
 
-    public void deleteCustomer(String customerId) {
-        var customer = repository.findById(customerId)
+    public void deleteCustomer(Integer customerId) {
+        Customer customer = repository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(
                         "Cannot delete the customer :: No customer with the provided ID::" + customerId
                 ));

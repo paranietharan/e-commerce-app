@@ -15,7 +15,7 @@ public class CustomerController {
     private final CustomerService service;
 
     @PostMapping
-    public ResponseEntity<String> createCustomer(
+    public ResponseEntity<Integer> createCustomer(
             @RequestBody @Valid CustomerRequest request
     ) {
         return ResponseEntity.ok(service.createCustomer(request));
@@ -35,17 +35,17 @@ public class CustomerController {
     }
 
     @GetMapping("exists/{id}")
-    public ResponseEntity<Boolean> exists(@PathVariable String customerId){
+    public ResponseEntity<Boolean> exists(@PathVariable Integer customerId){
         return ResponseEntity.ok(service.existsByIdById(customerId));
     }
 
     @GetMapping("/{customerId}")
-    public ResponseEntity<CustomerResponse> findById(@PathVariable String customerId){
+    public ResponseEntity<CustomerResponse> findById(@PathVariable Integer customerId){
         return ResponseEntity.ok(service.findById(customerId));
     }
 
     @DeleteMapping("/{customerId}")
-    public ResponseEntity<Void> delete(@PathVariable String customerId){
+    public ResponseEntity<Void> delete(@PathVariable Integer customerId){
         service.deleteCustomer(customerId);
         return ResponseEntity.accepted().build();
     }

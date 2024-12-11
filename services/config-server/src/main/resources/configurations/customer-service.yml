@@ -1,12 +1,14 @@
 spring:
-  data:
-    mongodb:
-      username: paranie
-      password: paranie
-      additional-hosts: localhost
-      port: 27017
-      database: customer
-      authentication-database: admin
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/product
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 server:
   port: 8090

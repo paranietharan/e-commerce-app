@@ -1,17 +1,23 @@
 package com.paranie.ecommerce.customer;
 
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
-@Validated
+@Entity
 public class Address {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String street;
     private String houseNumber;
     private String zipCode;
+
+    @OneToOne(mappedBy = "address")
+    private Customer customer;
 }
