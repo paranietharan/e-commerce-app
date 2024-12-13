@@ -11,11 +11,19 @@
         <module name="discovery" />
         <module name="customer" />
       </profile>
+      <profile name="Annotation profile for product" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="product" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server (1)" target="17" />
       <module name="order" target="17" />
-      <module name="product" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
